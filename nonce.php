@@ -22,6 +22,7 @@
  *
  * @version 1.0
  * @author Nick Verwymeren
+ * @license http://opensource.org/licenses/MIT MIT License
  **/
 class Nonce
 {
