@@ -223,7 +223,7 @@ class Nonce
   }
   
   /**
-   * Generates 3 hidden fields to add nonce capability to a form. Forms using this method
+   * Generates 2 hidden fields to add nonce capability to a form. Forms using this method
    * can be validated using validateForm().
    *
    * @return string
