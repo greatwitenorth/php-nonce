@@ -4,7 +4,7 @@ This class can be used to insert an nonce into a form. The nonce can optionally 
 
 What is an Nonce?
 -----------------
-A nonce is a 'Number Used Once'. This is usually used where you want an action to be performed only once. For example if a user on your site is presented a for to delete a blog post, we want to make sure this action can only be performed once with the given url. Including a Nonce in the url can ensure that this action will be performed only once.
+A nonce is a 'Number Used Once'. This is usually used where you want an action to be performed only once. For example if a user on your site is presented a form to delete a blog post, we want to make sure this action can only be performed once with the given form. Including a Nonce in the form can ensure that this action will be performed only once.
 
 Usage
 -----
