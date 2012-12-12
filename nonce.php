@@ -129,11 +129,13 @@ class Nonce
    *
    * @param int $timestamp the time in the form of the unix epoch
    * @param float $uid a unique id created by php's uniqid() function (although this can technically be anything). 
+   * @param string $content optional additional content supplied by the user. 
+   * @param float $uid a unique id created by php's uniqid() function (although this can technically be anything). 
    * @return Boolean true on success or will throw exception on error.
    **/
-  public function validateAndUseNonce($timestamp, $uid, $nonce)
+  public function validateAndUseNonce($timestamp, $uid, $content = '', $nonce)
   {
-    $hash = $this->getNonce($timestamp, $uid, strlen($nonce));
+    $hash = $this->getNonce($timestamp, $uid, $content, strlen($nonce));
 
     // Check to see if nonce has been used. Only checks if nonce's are being stored.
     if($this->store && $this->nonceExists($nonce)){
@@ -158,14 +160,15 @@ class Nonce
   /**
    * Creates a unique nonce string with an optional length. Max length is dependent upon hashing algorithm.
    * @param int $timestamp the time in the form of the unix epoch
-   * @param float $uid a unique id created by php's uniqid() function (although this can technically be anything). 
+   * @param float $uid a unique id. 
+   * @param string $content optional additional content supplied by the user. 
    * @param int length optional the length of the returned nonce. Max Dependent upon hashing algorithm.
    * @return string the nonce.
    **/
-  public function getNonce($timestamp, $uid, $length = NULL)
+  public function getNonce($timestamp, $uid, $content = '', $length = NULL)
   {
     global $site;
-    $hash = hash($this->hash, $timestamp . $this->secret . $uid);
+    $hash = hash($this->hash, $timestamp . $this->secret . $uid . $content);
     $i = 0;
     do{
       $hash = hash($this->hash, $hash);
@@ -209,9 +212,12 @@ class Nonce
   /**
    * This may be called to validate a form that was generated using generateFormFields()
    *
+   * @param string $content optional the additional content that was provided when 
+   * generateFormFields() was called
+   *
    * @return boolean true if valid
    **/
-  public function validateForm()
+  public function validateForm($content = '')
   {
     $plain = $this->fnDecrypt($_POST['key']);
     $plain = explode(' ', $plain, 2);
@@ -219,16 +225,25 @@ class Nonce
     $time = $plain[0];
     $uid = $plain[1];
     
-    return $this->validateAndUseNonce($time, $uid, $_REQUEST['nonce']);
+    if($content && $content !== $plain[2]){
+      
+    }
+    
+    return $this->validateAndUseNonce($time, $uid, $content, $_REQUEST['nonce']);
   }
   
   /**
    * Generates 2 hidden fields to add nonce capability to a form. Forms using this method
    * can be validated using validateForm().
    *
+   * @param integer $length optional The length of the nonce
+   * @param string $content optional content that will be hashed into the nonce.
+   * This might be useful if you want to include a user id. Remeber anything added here
+   * must also be included as an argument when validateForm() is called.
+   *
    * @return string
    **/
-  public function generateFormFields($length = NULL)
+  public function generateFormFields($content = '', $length = NULL)
   {
     $time = time();
     $uid = $this->generateUid();
@@ -238,7 +253,7 @@ class Nonce
     // text but this is a little more secure and makes things very difficult to break.
     $key = $this->fnEncrypt($key);
 
-    echo "\r\n<input type='hidden' name='nonce' value='" . $this->getNonce($time, $uid, $length) . "'>\r\n";
+    echo "\r\n<input type='hidden' name='nonce' value='" . $this->getNonce($time, $uid, $content, $length) . "'>\r\n";
     echo "<input type='hidden' name='key' value='$key'>\r\n";
   }
   
