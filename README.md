@@ -8,10 +8,6 @@ A nonce is a 'Number Used Once'. This is usually used where you want an action t
 
 Usage
 -----
-###Include class and create a new php-nonce object
-    include 'nonce.php';
-    $n = new Nonce;
-
 ###Make sure to set a minimum 32 character random string for $secret
     private $secret = "my super secret string";
 
@@ -26,6 +22,10 @@ When this is `true` nonce's will be tracked in a database and will only ensure t
     PRIMARY KEY (`nonce`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+###Include class and create a new php-nonce object
+    include 'nonce.php';
+    $n = new Nonce;
+    
 ###Generate the nonce fields in your form
     <form action="process.php" method="post">
         <input type="submit" value="Delete">
