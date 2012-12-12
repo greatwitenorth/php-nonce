@@ -18,7 +18,7 @@ Usage
 ###Set storage option
     protected $store = true; // set to true by default
 
-When this is true nonce's will be tracked in a database and will only ensure that the nonce can only be used once. When this is set to true, you'll need to make sure that you have correclty setup your database details. Also a database should be created using th following:
+When this is `true` nonce's will be tracked in a database and will only ensure that the nonce can only be used once. When this is set to `true`, you'll need to make sure that you have correclty setup your database details. Also a database should be created using the following:
 
     CREATE TABLE `nonce` (
     `nonce` varchar(128) NOT NULL DEFAULT '',
