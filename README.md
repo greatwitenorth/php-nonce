@@ -41,7 +41,7 @@ When this is `true` nonce's will be tracked in a database and will only ensure t
       }
     }
 
-If `$msg` is `true` then the form was successfully submitted. If it contains a string then an error occurred.
+If `$msg === true` then the form was successfully submitted. If it contains a string then an error occurred.
 
 A full example can be seen in `example.php`
 
