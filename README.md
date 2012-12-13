@@ -20,11 +20,11 @@ protected $store = true; // set to true by default
 
 When this is `true` nonce's will be tracked in a database and will only ensure that the nonce can only be used once. When this is set to `true`, you'll need to make sure that you have correclty setup your database details. A database table should be created using the following:
 ```mysql
-    CREATE TABLE `nonce` (
-    `nonce` varchar(128) NOT NULL DEFAULT '',
-    `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`nonce`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `nonce` (
+  `nonce` varchar(128) NOT NULL DEFAULT '',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`nonce`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 ###Include class and create a new php-nonce object
 ```php
